@@ -14,7 +14,7 @@ def DevelopGame(matrix_size, init_pos, mapInfo):
     new_matrix[i] = mapInfo[i].split()
 
 
-  # 방문한 곳인지 체크
+  # 방문한 곳인지 정보 담는 배열
   visited = np.zeros((N,M))
   visited[x][y] = 1
   answer = 1
@@ -28,23 +28,24 @@ def DevelopGame(matrix_size, init_pos, mapInfo):
   while True:
     i = 0
     for i in range(len(rot)):
-      # 현 방향에서 왼쪽
+      # 현 방향에서 왼쪽으로 회전하고 이동했을 때 좌표
       nd = d - 1 if d != 0 else len(rot) -1
       nx = x + steps[nd][0]
       ny = y + steps[nd][1]
-
+      
+      # 방문하지 않았고 육지일 때 좌표 업데이트
       if visited[nx][ny] == 0 and new_matrix[nx][ny] == 0:
         x, y = nx, ny
         d = nd
         visited[x][y] = 1
         answer += 1
         continue
-      elif new_matrix[nx][ny] == 1: # 왼쪽에 있는 칸이 바다일 때 break
+      elif new_matrix[nx][ny] == 1: # 왼쪽에 있는 칸이 바다일 때는 회전만
         d = nd        
     
     # 4가지 방향으로 회전했을 때
     if i == len(rot)-1:
-      # 뒷 칸이 바다가 아닐 때 뒤로 한 칸 이동
+      # 뒷 칸이 육지일 때 뒤로 한 칸 이동
       if new_matrix[nx][ny] == 0:
         nx = x - steps[nd][0]
         ny = y - steps[nd][1]
