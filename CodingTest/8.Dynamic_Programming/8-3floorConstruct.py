@@ -1,19 +1,20 @@
-# 바닥 공사
-# (width, height) = (n,2) tile
-# With 1x2, 2x1, 2x2, find case number 
-# a_i = a_(i-1) + a_(i-2) * 2
+import time
+
+
 def floorConstruct(n):
-    # Initialize DP table
-    d = [0] * (n+1)
-    
-    # Bottom-Up DP
-    d[1] = 1  # 2x1 일때 경우의 수
-    d[2] = 3
+    answer = [0] * (n+1)
+    answer[1] = 1
+    answer[2] = 3
+
     for i in range(3, n+1):
-        d[i] = (d[i-1] + 2 * d[i-2]) % 796796
+        answer[i] = answer[i-2] * 2 + answer[i-1]
 
-    print(d[n])
+    return answer[n] % 796796
 
-# Input:5
-# Output: 21 
-floorConstruct(5)
+
+n = int(input())  # 1~1000
+start = time.time()
+result = floorConstruct(n)
+end = time.time()
+print(result)
+print('Time: {:5f}'.format(end-start))  # linmit: 1[sec]
