@@ -1,38 +1,55 @@
-INF = int(1e9)
+import heapq as hq
+# 다익스트라 / 플로이드 워셜 (FW)
+"""
+노드 갯수, 간선 갯수
+경로 정보 담는 그래프 (FW: cost 담음)
+최초 지점과의 거리 정보 담는 리스트(다익스트라)
+자료구조: 최소 힙
+"""
 
-# Get number of nodes and edges
-n, m = map(int, input().split())
-# Initialize graph value to INF
-graph = [[INF] * (n+1) for _ in range(n+1)]
+INF = int(1E+9)
 
-# Set graph value to one when going to itself
-for a in range(1, n+1):
-    for b in range(1, n+1):
-        if a == b:
-            graph[a][b] = 0
 
-# Get edge info, and initialize
-for _ in range(m):
-    # Set cost as one from a to b
-    a, b = map(int, input().split())
-    graph[a][b] = 1
-    graph[b][a] = 1
+def floyd_warshall(v, graph):
+    for i in range(1, v+1):
+        for j in range(1, v+1):
+            for l in range(1, v+1):
+                graph[i][j] = min(graph[i][j], graph[i][l] + graph[l][j])
 
-# Get input of pass-by node X and final point K
-x, k = map(int, input().split())
 
-# By recurrence relation, run Floyd Warshall algorithm
-for k in range(1, n+1):
-    for a in range(1, n+1):
-        for b in range(1, n+1):
-            graph[a][b] = min(graph[a][b], graph[a][k]+ graph[k][b])
+def future_city(v, x, k, graph):
+    # By recurrence relation, run Floyd Warshall algorithm
+    floyd_warshall(v, graph)
 
-# Display the answer
-distance = graph[1][k] + graph[k][x]
+    # save the shortest distance
+    result = graph[1][k] + graph[k][x]
 
-# If unreachable, print -1
-if distance >= INF:
-    print("-1")
-# If reachable, print shortest distance
-else:
-    print(distance)
+    # Display the answer
+    if result < INF:
+        print(result)
+    else:
+        print(-1)
+
+
+if __name__ == '__main__':
+    # Get number of nodes and edges
+    v, e = map(int, input().split())
+    # 그래프 초기화 하는 방법 **
+    graph = [[INF] * (v+1) for _ in range(v + 1)]  # 노드에 따라 연결 정보 있기 때문에 노드 갯수 만큼 만들어줌 (+1은 인덱스 바로 적용을 위함)
+
+    # 자기 자신으로 가는 비용은 0으로 초기화 ***
+    for a in range(1, v+1):
+        for b in range(1, v+1):
+            if a == b:
+                graph[a][b] = 0
+
+    # Each edge info
+    for _ in range(e):
+        a, b = map(int, input().split())
+        graph[a][b] = 1
+        graph[b][a] = 1
+
+    # Get input of pass-by node k and final point node x
+    x, k = map(int, input().split())
+
+    future_city(v, x, k, graph)
