@@ -30,3 +30,9 @@ start_t = time.time()
 print(adventureGuild(fear))
 end_t = time.time()
 print("{:.4f}[sec]".format(end_t-start_t))  # 1초 이하
+
+"""
+출력:
+45725
+0.0040[sec]
+"""
