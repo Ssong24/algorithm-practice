@@ -21,7 +21,7 @@ def adventureGuild(fear):
 n = 100000   # int(input())
 fear = []
 for i in range(n):
-    fear.append(random.randint(1, 5))    # 계산량을 증가시키기 위해서 (1,10)으로 설정 원래는 randint(1, n)
+    fear.append(random.randint(1, 5))    # 계산량을 증가했을 때 시간 체크하기 위해 randint(1,10)으로 설정.  원래는 randint(1, n)
 
 # for _ in range(n):
 #     fear = list(map(int, input()))
