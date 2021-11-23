@@ -59,5 +59,5 @@ print("Time: {:.4f}[sec]".format(end_t - start_t))
 n,m 최대치 설정 시
 출력:
 97
-Time: 1.9304[sec]  (limit: 2 sec)
+Time: 1.9304[sec]  --limit: 2 sec
 """
