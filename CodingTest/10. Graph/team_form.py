@@ -17,9 +17,8 @@ def union_parent(parent, a, b):
 
 def team_formation():
     v, m = map(int, input().split())
-    parent = [0] * (v + 1)
-
-    # Initialize itself as parent node
+    parent = [x for x in range(v+1)] # Initialize itself as parent node
+    
     for i in range(1, v + 1):
         parent[i] = i
 
